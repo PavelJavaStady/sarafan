@@ -1,15 +1,17 @@
 package project.sarafan.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "usr")
-
+@Data
 public class User {
     @Id
     private String id;
@@ -18,7 +20,7 @@ public class User {
     private String email;
     private String gender;
     private String locale;
-    private LocalDateTime lastvisit;
+    private LocalDateTime lastVisit;
 
     public String getId() {
         return id;
@@ -68,12 +70,11 @@ public class User {
         this.locale = locale;
     }
 
-    public LocalDateTime getLastvisit() {
-        return lastvisit;
+    public LocalDateTime getLastVisit() {
+        return lastVisit;
     }
 
-    public void setLastvisit(LocalDateTime lastvisit) {
-        this.lastvisit = lastvisit;
+    public void setLastVisit(LocalDateTime lastVisit) {
+        this.lastVisit = lastVisit;
     }
-
 }

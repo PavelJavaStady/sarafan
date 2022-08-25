@@ -16,7 +16,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("message")
 public class MessageController {
-    private MessageRepo messageRepo;
+    private final MessageRepo messageRepo;
 
     @Autowired
     public MessageController(MessageRepo messageRepo) {
@@ -37,18 +37,22 @@ public class MessageController {
 
     @PostMapping
     public Message create(@RequestBody Message message) {
-        message.setLocalDateTime(LocalDateTime.now());
+        message.setCreationDate(LocalDateTime.now());
         return messageRepo.save(message);
     }
+
     @PutMapping("{id}")
-    public Message update(@PathVariable("id") Message messageFromDb,
-                          @RequestBody Message message) {
-        BeanUtils.copyProperties(message,messageFromDb,"id");
+    public Message update(
+            @PathVariable("id") Message messageFromDb,
+            @RequestBody Message message
+    ) {
+        BeanUtils.copyProperties(message, messageFromDb, "id");
+
         return messageRepo.save(messageFromDb);
     }
+
     @DeleteMapping("{id}")
-    public void delete(@PathVariable ("id") Message message){
+    public void delete(@PathVariable("id") Message message) {
         messageRepo.delete(message);
     }
 }
-

@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import project.sarafan.domain.User;
-import project.sarafan.repo.UserDetailesRepo;
+import project.sarafan.repo.UserDetailsRepo;
 
 import java.time.LocalDateTime;
 
@@ -28,10 +28,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PrincipalExtractor principalExtractor(UserDetailesRepo userDetailesRepo) {
+    public PrincipalExtractor principalExtractor(UserDetailsRepo userDetailsRepo) {
         return map -> {
             String id = (String) map.get("sub");
-            User user = userDetailesRepo.findById(id).orElseGet(() -> {
+            User user = userDetailsRepo.findById(id).orElseGet(() -> {
                 User newUser = new User();
                 newUser.setId(id);
                 newUser.setName((String) map.get("name"));
@@ -41,8 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 newUser.setUserpic((String) map.get("picture"));
                 return newUser;
             });
-            user.setLastvisit(LocalDateTime.now());
-          return   userDetailesRepo.save(user);
+            user.setLastVisit(LocalDateTime.now());
+            return   userDetailsRepo.save(user);
         };
     }
 }
